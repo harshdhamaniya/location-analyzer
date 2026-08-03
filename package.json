@@ -9,6 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "sample": "node scripts/generate-sample.mjs",
+    "screens": "node scripts/capture-screens.mjs",
     "postinstall": "node scripts/copy-maplibre-worker.mjs"
   },
   "dependencies": {
@@ -37,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.22",
+    "puppeteer": "^24.43.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"

@@ -6,6 +6,16 @@ Turn raw Google Location History into interactive, audit-ready insight — trave
 
 > **Privacy by architecture, not by promise.** There is no backend, no cloud, no telemetry and no account. Parsing, analytics, storage and report generation all happen inside your browser. The only optional network traffic is anonymous basemap tiles, and even that can be switched off for a fully air-gapped mode.
 
+![Dashboard](public/screens/dashboard.png)
+
+| Route reconstruction & replay | Travel calendar & expenses |
+|:---:|:---:|
+| ![Interactive map](public/screens/map.png) | ![Calendar](public/screens/calendar.png) |
+| **Forensic timeline** | **Analytics & anomaly audit** |
+| ![Timeline](public/screens/timeline.png) | ![Analytics](public/screens/analytics.png) |
+
+*All screenshots were generated from the bundled synthetic sample dataset (`npm run sample`) — no real location data.*
+
 ---
 
 ## Table of contents

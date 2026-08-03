@@ -25,6 +25,7 @@ import {
   Repeat,
   Map as MapIcon,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { useStore } from "@/lib/store/useStore";
 import {
   computeTotals,
@@ -81,7 +82,7 @@ export default function DashboardPage() {
 
   if (!dataset || !totals) {
     return (
-      <div className="flex min-h-[70vh] flex-col justify-center py-10">
+      <div className="py-12">
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
             Your movement history,{" "}
@@ -94,6 +95,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <UploadZone />
+        <LandingPreview />
       </div>
     );
   }
@@ -247,6 +249,73 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Product-shot gallery shown on the empty-state landing page. */
+function LandingPreview() {
+  const shots = [
+    { src: "/screens/map.png", alt: "Interactive map with reconstructed routes and route replay", caption: "Route reconstruction & replay" },
+    { src: "/screens/calendar.png", alt: "Calendar with per-day distance, working hours and expenses", caption: "Travel calendar & expenses" },
+    { src: "/screens/timeline.png", alt: "Forensic day timeline of stops and trips", caption: "Forensic timeline" },
+    { src: "/screens/analytics.png", alt: "Analytics charts and anomaly audit", caption: "Analytics & anomaly audit" },
+  ];
+  return (
+    <section className="mx-auto mt-20 w-full max-w-5xl" aria-label="Product preview">
+      <p className="mb-6 text-center text-[11px] font-semibold tracking-[0.2em] text-faint uppercase">
+        What your data becomes
+      </p>
+
+      {/* hero shot in a browser frame */}
+      <motion.figure
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+        className="glass overflow-hidden rounded-2xl shadow-2xl"
+      >
+        <div className="flex items-center gap-1.5 border-b border-hairline px-4 py-2.5">
+          <span className="size-2.5 rounded-full bg-danger/70" />
+          <span className="size-2.5 rounded-full bg-warning/70" />
+          <span className="size-2.5 rounded-full bg-positive/70" />
+          <span className="mx-auto rounded-md bg-canvas-deep/60 px-3 py-0.5 text-[10px] text-faint">
+            localhost:3000 — everything stays here
+          </span>
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/screens/dashboard.png"
+          alt="Location Analyzer dashboard with travel KPIs, daily distance trend and insights"
+          className="w-full"
+          loading="lazy"
+        />
+      </motion.figure>
+
+      {/* supporting shots */}
+      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        {shots.map((s, i) => (
+          <motion.figure
+            key={s.src}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.2, 0.8, 0.2, 1] }}
+            className="glass glass-hover overflow-hidden rounded-2xl"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={s.src} alt={s.alt} className="w-full" loading="lazy" />
+            <figcaption className="px-4 py-3 text-center text-xs font-medium text-muted">
+              {s.caption}
+            </figcaption>
+          </motion.figure>
+        ))}
+      </div>
+
+      <p className="mt-8 text-center text-xs text-faint">
+        Screenshots generated from the bundled sample dataset — try it with{" "}
+        <code className="rounded bg-canvas-deep/60 px-1.5 py-0.5">npm run sample</code>.
+      </p>
+    </section>
   );
 }
 
