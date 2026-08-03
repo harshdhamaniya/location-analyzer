@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------- */
+/* Design tokens                                                     */
+/* ---------------------------------------------------------------- */
+:root {
+  --canvas: #f6f7f9;
+  --canvas-deep: #eceef2;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-solid: #ffffff;
+  --hairline: rgba(15, 18, 25, 0.08);
+  --ink: #0f1219;
+  --ink-muted: #5c6370;
+  --ink-faint: #9aa1ad;
+  --accent: #4f6df5;
+  --accent-2: #8b5cf6;
+  --accent-soft: rgba(79, 109, 245, 0.1);
+  --positive: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --glass-blur: 14px;
+  --shadow-soft: 0 1px 2px rgba(15, 18, 25, 0.04), 0 8px 24px rgba(15, 18, 25, 0.06);
+  --shadow-pop: 0 2px 8px rgba(15, 18, 25, 0.08), 0 16px 48px rgba(15, 18, 25, 0.14);
+}
+
+.dark {
+  --canvas: #0b0d12;
+  --canvas-deep: #07080c;
+  --panel: rgba(23, 26, 34, 0.66);
+  --panel-solid: #14161d;
+  --hairline: rgba(255, 255, 255, 0.09);
+  --ink: #eef0f4;
+  --ink-muted: #9aa1ad;
+  --ink-faint: #5c6370;
+  --accent: #6d8bff;
+  --accent-2: #a78bfa;
+  --accent-soft: rgba(109, 139, 255, 0.14);
+  --positive: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-pop: 0 2px 8px rgba(0, 0, 0, 0.5), 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-deep: var(--canvas-deep);
+  --color-panel: var(--panel-solid);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-faint: var(--ink-faint);
+  --color-hairline: var(--hairline);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-positive: var(--positive);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --font-sans:
+    "Inter", "SF Pro Text", -apple-system, "Segoe UI Variable", "Segoe UI",
+    system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "Cascadia Code", ui-monospace, "SF Mono", Consolas,
+    monospace;
+}
+
+/* ---------------------------------------------------------------- */
+/* Base                                                              */
+/* ---------------------------------------------------------------- */
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(1100px 600px at 85% -10%, var(--accent-soft), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, color-mix(in srgb, var(--accent-2) 7%, transparent), transparent 60%),
+    var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv11", "ss01";
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* Slim scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink-faint) 45%, transparent) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink-faint) 45%, transparent);
+  border-radius: 8px;
+}
+
+/* ---------------------------------------------------------------- */
+/* Glass panels & utility classes                                    */
+/* ---------------------------------------------------------------- */
+.glass {
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-soft);
+}
+
+.glass-hover {
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.glass-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-pop);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--hairline));
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.skeleton {
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    var(--hairline) 25%,
+    color-mix(in srgb, var(--ink-faint) 18%, transparent) 37%,
+    var(--hairline) 63%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+/* MapLibre chrome adjustments */
+.maplibregl-ctrl-group {
+  background: var(--panel-solid) !important;
+  border: 1px solid var(--hairline) !important;
+  box-shadow: var(--shadow-soft) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+.dark .maplibregl-ctrl-group button span {
+  filter: invert(1);
+}
+.maplibregl-popup-content {
+  background: var(--panel-solid) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--hairline);
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-pop) !important;
+  font-family: var(--font-sans);
+  padding: 12px 14px !important;
+}
+.maplibregl-popup-tip {
+  border-top-color: var(--panel-solid) !important;
+  border-bottom-color: var(--panel-solid) !important;
+}
+.maplibregl-popup-close-button {
+  color: var(--ink-muted) !important;
+  font-size: 16px;
+  padding: 2px 8px;
+}
+
+/* Print styles for PDF reports */
+@media print {
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-block {
+    break-inside: avoid;
+  }
+}
